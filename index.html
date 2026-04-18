@@ -1,0 +1,756 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A Panicked Healer's Guide</title>
+    <meta name="description"
+        content="A fan-made static reference guide to healing herbs, remedies, illnesses, and lore-inspired medicine for Warriors-style storytelling.">
+    <meta name="theme-color" content="#1a2416">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Fondamento:ital@0;1&family=MedievalSharp&family=Quicksand:wght@400;600;700&display=swap"
+        rel="stylesheet">
+    <style>
+        html {
+            scroll-behavior: smooth;
+        }
+
+        :root {
+            --parchment: #f4e4bc;
+            --ink-green: #2d5a27;
+            --header-brown: #4a3728;
+            --warning-green: #1a4d1a;
+            --stain-base: rgba(139, 94, 60, 0.25);
+            --age-spot: rgba(92, 64, 45, 0.15);
+            --den-moss: #1a2416;
+            --den-stone: #2c2e2a;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            background-color: var(--den-moss);
+            background-image: radial-gradient(circle at 2px 2px, var(--den-stone) 1px, transparent 0);
+            background-size: 45px 45px;
+            background-attachment: fixed;
+            font-family: 'Quicksand', sans-serif;
+            color: #2d1b16;
+            padding: 140px 20px 80px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .skip-link {
+            position: absolute;
+            left: 16px;
+            top: 16px;
+            transform: translateY(-200%);
+            background: #fff;
+            color: #000;
+            padding: 10px 14px;
+            border-radius: 8px;
+            z-index: 1000;
+            font-weight: 700;
+        }
+
+        .skip-link:focus {
+            transform: translateY(0);
+        }
+
+        .scroll-container {
+            max-width: 850px;
+            width: 100%;
+            background-color: var(--parchment);
+            background-image: url("https://www.transparenttextures.com/patterns/p6-dark.png");
+            position: relative;
+            padding: 140px 100px 60px;
+            box-shadow: 0 0 100px rgba(0, 0, 0, 0.8), inset 0 0 70px rgba(139, 94, 60, 0.3);
+            border: 1px solid rgba(0, 0, 0, 0.15);
+            overflow: visible;
+        }
+
+        .weathering-layer {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            z-index: 1;
+            overflow: hidden;
+        }
+
+        .weather-spot {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(50px);
+        }
+
+        .scroll-curl-top {
+            position: absolute;
+            top: -80px;
+            left: -120px;
+            right: -120px;
+            height: 160px;
+            background: #e6d5a7;
+            background-image: linear-gradient(to bottom, #7a6a4a 0%, #f4e4bc 45%, #9d8d66 100%);
+            border-radius: 60px 60px 20px 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 50;
+            border-bottom: 5px solid #7d6d46;
+        }
+
+        .scroll-title {
+            font-family: 'MedievalSharp', cursive;
+            font-size: clamp(2rem, 4vw, 4rem);
+            color: #1a100a;
+            transform: translateY(12px);
+            text-shadow: 2px 2px 4px rgba(255, 255, 255, 0.4);
+            letter-spacing: 2px;
+            white-space: nowrap;
+            text-align: center;
+            margin: 0;
+            padding: 0 20px;
+        }
+
+        .intro-note,
+        .no-results,
+        .disclaimer {
+            position: relative;
+            z-index: 5;
+            color: var(--header-brown);
+        }
+
+        .intro-note,
+        .disclaimer {
+            font-size: 1rem;
+            line-height: 1.7;
+            background: rgba(255, 255, 255, 0.2);
+            border-left: 4px solid var(--ink-green);
+            padding: 14px 16px;
+            margin-bottom: 24px;
+        }
+
+        .no-results {
+            padding: 18px 0;
+            font-weight: 700;
+            display: none;
+        }
+
+        .herb-title {
+            font-family: 'Fondamento', cursive;
+            font-size: 2.6rem;
+            color: var(--ink-green);
+            margin-bottom: 0.1rem;
+            font-weight: 600;
+            position: relative;
+            z-index: 5;
+            letter-spacing: 0.04em;
+        }
+
+        .real-name-sub {
+            font-size: 1.1rem;
+            color: var(--header-brown);
+            opacity: 0.8;
+            margin-top: -12px;
+            margin-bottom: 18px;
+            font-weight: 600;
+            font-style: italic;
+        }
+
+        .herb-detail-meta {
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 2.5px;
+            color: #4a3728;
+            opacity: 0.85;
+            line-height: 1.4;
+            margin-bottom: 6px;
+            position: relative;
+            z-index: 5;
+            font-weight: 700;
+        }
+
+        .advisory-text {
+            font-family: 'Fondamento', cursive;
+            font-size: 1.55rem;
+            line-height: 1.7;
+            margin-bottom: 1rem;
+            color: #2d1b16;
+            font-style: italic;
+            position: relative;
+            z-index: 5;
+            letter-spacing: 0.02em;
+        }
+
+        .healer-warning {
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--warning-green);
+            margin-top: 5px;
+            margin-bottom: 2rem;
+            position: relative;
+            z-index: 5;
+            padding: 8px 15px;
+            border: 2px solid var(--warning-green);
+            display: inline-block;
+            border-radius: 6px;
+            background: rgba(45, 90, 39, 0.05);
+        }
+
+        .category-header {
+            font-family: 'MedievalSharp', cursive;
+            font-size: 2.3rem;
+            color: var(--header-brown);
+            margin: 100px 0 50px;
+            padding-bottom: 15px;
+            border-bottom: 3px double var(--ink-green);
+            text-transform: uppercase;
+            position: relative;
+            z-index: 5;
+            letter-spacing: 5px;
+        }
+
+        .cross-wisdom {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--ink-green);
+            opacity: 0.9;
+            margin-bottom: 4rem;
+            padding-left: 15px;
+            border-left: 4px solid var(--ink-green);
+            position: relative;
+            z-index: 5;
+        }
+
+        #codeList {
+            color: var(--header-brown);
+            font-weight: 600;
+        }
+
+        #codeList li {
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .credits-section {
+            margin-top: 80px;
+            padding-top: 30px;
+            border-top: 1px solid rgba(74, 55, 40, 0.2);
+            text-align: center;
+            font-size: 0.9rem;
+            color: var(--header-brown);
+            opacity: 0.8;
+            font-style: italic;
+            position: relative;
+            z-index: 10;
+            line-height: 2;
+        }
+
+        .search-area {
+            border-bottom: 3px solid rgba(30, 48, 36, 0.15);
+            padding: 20px 0 50px;
+            margin-bottom: 80px;
+            margin-top: 60px;
+            position: relative;
+            z-index: 10;
+        }
+
+        #mainSearch {
+            background: transparent;
+            border: none;
+            border-bottom: 4px solid var(--ink-green);
+            width: 100%;
+            font-family: 'Fondamento', cursive;
+            font-size: 2rem;
+            outline: none;
+            color: #1a3024;
+            padding: 10px;
+        }
+
+        #mainSearch:focus {
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 6px 6px 0 0;
+        }
+
+        .mix-ingredient {
+            background: rgba(45, 90, 39, 0.08);
+            border: 1px solid rgba(45, 90, 39, 0.2);
+            color: var(--ink-green);
+            padding: 4px 12px;
+            border-radius: 15px;
+            font-size: 12px;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+
+        .jump-nav {
+            position: fixed;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .jump-btn {
+            background: #1a1512;
+            color: #f4e4bc;
+            width: 58px;
+            height: 58px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid #5d4738;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+            transition: 0.3s;
+            text-decoration: none;
+        }
+
+        .jump-btn:hover,
+        .jump-btn:focus-visible {
+            background: var(--ink-green);
+            transform: scale(1.12) translateX(4px);
+        }
+
+        .mode-toggle {
+            position: fixed;
+            top: 25px;
+            right: 25px;
+            z-index: 100;
+            background: rgba(26, 18, 14, 0.98);
+            padding: 5px;
+            border-radius: 30px;
+            border: 1px solid #c4b487;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .mode-toggle button {
+            color: #f4e4bc;
+            padding: 8px 22px;
+            font-size: 0.85rem;
+            border-radius: 20px;
+            transition: 0.2s;
+            font-weight: bold;
+            font-family: 'MedievalSharp', cursive;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+        }
+
+        .toggle-active {
+            background: var(--ink-green) !important;
+            color: white !important;
+        }
+
+        @media (max-width: 1100px) {
+            .jump-nav {
+                left: 10px;
+            }
+
+            .jump-btn {
+                width: 48px;
+                height: 48px;
+            }
+        }
+
+        @media (max-width: 900px) {
+            body {
+                padding: 120px 12px 60px;
+            }
+
+            .scroll-container {
+                padding: 120px 28px 50px;
+            }
+
+            .scroll-curl-top {
+                left: -20px;
+                right: -20px;
+                top: -45px;
+                height: 95px;
+                border-radius: 25px 25px 12px 12px;
+            }
+
+            .scroll-title {
+                white-space: normal;
+                transform: translateY(2px);
+            }
+
+            .jump-nav {
+                position: fixed;
+                left: 50%;
+                top: auto;
+                bottom: 12px;
+                transform: translateX(-50%);
+                flex-direction: row;
+                flex-wrap: wrap;
+                justify-content: center;
+                max-width: calc(100vw - 24px);
+                background: rgba(26, 18, 14, 0.92);
+                padding: 8px;
+                border-radius: 999px;
+            }
+
+            .mode-toggle {
+                top: 10px;
+                right: 10px;
+                left: 10px;
+                display: flex;
+                justify-content: center;
+            }
+
+            .category-header {
+                font-size: 1.8rem;
+                letter-spacing: 2px;
+            }
+
+            .herb-title {
+                font-size: 2rem;
+            }
+
+            .advisory-text {
+                font-size: 1.25rem;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            html {
+                scroll-behavior: auto;
+            }
+
+            * {
+                transition: none !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <a href="#mainContent" class="skip-link">Skip to content</a>
+
+    <div class="mode-toggle" role="group" aria-label="Display mode toggle">
+        <button id="bookModeBtn" type="button" onclick="setMode('book')" class="toggle-active"
+            aria-pressed="true">Ancestors' Lore</button>
+        <button id="realModeBtn" type="button" onclick="setMode('real')" aria-pressed="false">Twoleg Truth</button>
+    </div>
+
+    <nav class="jump-nav" aria-label="Quick section navigation">
+        <a href="#herbSection" class="jump-btn" title="Herbs" aria-label="Go to herbs">🌿</a>
+        <a href="#mixSection" class="jump-btn" title="Mixes" aria-label="Go to mixes">🥣</a>
+        <a href="#illnessSection" class="jump-btn" title="Illness" id="nav-illness"
+            aria-label="Go to illnesses">🐱🤧</a>
+        <a href="#poisonSection" class="jump-btn" title="Shadow" id="nav-poison" aria-label="Go to toxic plants">💀</a>
+        <a href="#techniquesSection" class="jump-btn" title="Techniques" id="nav-techs"
+            aria-label="Go to techniques">🐾</a>
+        <a href="#taskSection" class="jump-btn" title="Tasks" id="nav-tasks" aria-label="Go to tasks">🕯️</a>
+        <a href="#codeSection" class="jump-btn" title="Code" aria-label="Go to code">📜</a>
+    </nav>
+
+    <div class="scroll-container">
+        <div class="weathering-layer" id="weatherLayer" aria-hidden="true"></div>
+
+        <header class="scroll-curl-top">
+            <h1 class="scroll-title">A Panicked Healer's Guide</h1>
+        </header>
+
+        <main id="mainContent">
+            <section class="search-area" aria-labelledby="searchHeading">
+                <h2 id="searchHeading" class="sr-only">Search the guide</h2>
+                <label for="mainSearch"
+                    class="block font-bold mb-1 text-[12px] uppercase tracking-[8px] opacity-50">Consult your Healer's
+                    intuition...</label>
+                <input type="search" id="mainSearch" placeholder="Search herbs, symptoms, tasks, or lore..."
+                    aria-describedby="searchHelp">
+                <p id="noResultsMessage" class="no-results" aria-live="polite">No matching entries were found.
+                    Try a broader search term.</p>
+            </section>
+
+            <div id="contentArea">
+                <section id="herbSection" class="scroll-mt-24" aria-labelledby="herbSectionHeading">
+                    <h2 id="herbSectionHeading" class="category-header">Herbs & Remedies 🌿</h2>
+                    <div id="herbResults"></div>
+                </section>
+                <section id="mixSection" class="mt-24 scroll-mt-24" aria-labelledby="mixSectionHeading">
+                    <h2 id="mixSectionHeading" class="category-header">Prepared Mixes 🥣</h2>
+                    <div id="mixList"></div>
+                </section>
+                <section id="illnessSection" class="mt-24 scroll-mt-24" aria-labelledby="illnessHeader">
+                    <h2 id="illnessHeader" class="category-header">The Sickness Stash 🐱🤧</h2>
+                    <div id="illnessList"></div>
+                </section>
+                <section id="poisonSection" class="mt-24 scroll-mt-24" aria-labelledby="poisonHeader">
+                    <h2 id="poisonHeader" class="category-header">The Shadow Stash 💀</h2>
+                    <div id="poisonList"></div>
+                </section>
+                <section id="techniquesSection" class="mt-24 scroll-mt-24" aria-labelledby="techHeader">
+                    <h2 id="techHeader" class="category-header">Mentor's Techniques 🐾</h2>
+                    <div id="techniquesList"></div>
+                </section>
+                <section id="taskSection" class="mt-24 scroll-mt-24" aria-labelledby="taskHeader">
+                    <h2 id="taskHeader" class="category-header">Healer's Sacred Tasks 🕯️</h2>
+                    <div id="taskList"></div>
+                </section>
+                <section id="codeSection" class="mt-36 scroll-mt-24 pb-12" aria-labelledby="codeHeading">
+                    <h2 id="codeHeading" class="category-header text-center">The Medicine Cat Code</h2>
+                    <ul id="codeList" class="list-decimal pl-16 space-y-9 font-serif italic leading-relaxed"></ul>
+                </section>
+            </div>
+        </main>
+
+        <footer class="credits-section">
+            <p class="disclaimer" style="text-align: left; margin-bottom: 30px;">
+                This page is for <strong>fiction, fandom, and creative reference only</strong>. It is not medical,
+                veterinary, or foraging advice. Do not eat, handle, or administer wild plants based on this guide.
+            </p>
+
+            <p class="intro-note">
+                A fan-made field guide for lore-inspired healing herbs, remedies, illnesses, and tasks.
+                Switch between <strong>Ancestors' Lore</strong> and <strong>Twoleg Truth</strong> to compare
+                fictional usage with real-world references.
+            </p>
+
+            Archived by: Zofia McCall & Alasdair McCall <br>
+            Original layout and content adaptation for a fan reference guide<br>
+            All herbs, techniques, lore, and sacred knowledge referenced here are inspired by <em>Warriors</em>
+            by Erin Hunter and related fan experiences.
+            <span style="font-size: 0.8rem; opacity: 0.8; margin-top: 15px; display: block;">
+                This is an unofficial, non-commercial fan project. Consider adding a dedicated credits and copyright
+                notice before publishing.
+            </span>
+            <span style="font-size: 0.75rem; opacity: 0.7; margin-top: 15px; display: block;">
+                And for <b>Emily</b>, who loved this scroll even more than I did.
+            </span>
+        </footer>
+    </div>
+
+    <script>
+        const herbLibrary = [
+            { name: "Cobwebs", realName: "Spider Silk", category: "Bleeding", symptoms: ["bleeding", "blood"], appearance: "Thin strands.", location: "Corner cracks.", bookUse: "Press firmly into a weeping wound to stem the flow of life-blood.", realUse: "Structural protein used historically for clotting.", danger: "Ensure no spiders remain." },
+            { name: "Sticklewort", realName: "Agrimonia", category: "Bleeding", symptoms: ["bleeding", "blood", "scrape"], appearance: "Yellow flowers.", location: "Damp ground.", bookUse: "Rub onto minor scrapes to stop the stinging.", realUse: "Skin astringent." },
+            { name: "Goldenrod", realName: "Solidago", category: "Bleeding", symptoms: ["wound", "scratch"], appearance: "Tall yellow tufts.", location: "Sunny hillsides.", bookUse: "Chew into pulp for deep scratches.", realUse: "Antiseptic properties." },
+            { name: "Tormentil", realName: "Potentilla", category: "Bleeding", symptoms: ["blood", "heavy bleeding"], appearance: "Yellow flowers.", location: "Dry fields.", bookUse: "Chew bitter root; stops heavy bleeding.", realUse: "Astringent." },
+            { name: "Wintergreen", realName: "Gaultheria", category: "Bleeding", symptoms: ["wound", "scratch"], appearance: "Red berries.", location: "Sandy floors.", bookUse: "Apply to clean a shallow scratch.", realUse: "Natural aspirin source.", humanWarning: "Concentrated oil is hazardous if ingested." },
+            { name: "Marigold", realName: "Calendula", category: "Bleeding", symptoms: ["bleeding", "blood"], appearance: "Orange flower.", location: "Riverbanks.", bookUse: "Chew petals to stop blood from fresh wounds.", realUse: "Promotes skin healing.", secondary: "Also used as a primary defense against infection." },
+            { name: "Horsetail", realName: "Equisetum", category: "Bleeding", symptoms: ["bleeding", "blood"], appearance: "Segmented stalks.", location: "Marshy ground.", bookUse: "Press crushed stalks directly into a wound; legendary for stopping blood.", realUse: "Contains silica; historically used in topical preparations.", secondary: "Also used to draw infection from old wounds." },
+
+            { name: "Watermint", realName: "Mentha aquatica", category: "Bellyache", symptoms: ["bellyache", "stomach"], appearance: "Leafy plant near water.", location: "Riverbanks.", bookUse: "The reliable aid for a bellyache. Calms instantly.", realUse: "Often used in digestive teas.", humanWarning: "Safe culinary herb when correctly identified." },
+            { name: "Chervil", realName: "Anthriscus", category: "Bellyache", symptoms: ["bellyache", "stomach"], appearance: "Fern-like leaves.", location: "Under Snakerocks.", bookUse: "Feed leaves to settle a rolling belly.", realUse: "Culinary herb.", humanWarning: "Wild chervil can be confused with deadly lookalikes such as hemlock." },
+            { name: "Mallow", realName: "Malva", category: "Bellyache", symptoms: ["bellyache", "throat"], appearance: "Pinkish flowers.", location: "Damp areas.", bookUse: "Soothe an aching belly or sore throat.", realUse: "Contains soothing mucilage.", humanWarning: "Correct identification is essential; toxic lookalikes exist." },
+            { name: "Sweet-sedge", realName: "Acorus calamus", category: "Bellyache", symptoms: ["infection", "bellyache"], appearance: "Long stalks.", location: "Marshy ground.", bookUse: "Swallow juice to fight chest infections.", realUse: "Historically used as a scenting and traditional remedy plant.", humanWarning: "Some varieties may contain harmful compounds if consumed." },
+
+            { name: "Comfrey Root", realName: "Symphytum", category: "Broken Bones", symptoms: ["broken", "bone", "leg"], appearance: "Large leaves, dark root.", location: "Damp ground.", bookUse: "Chew well and wrap around the break to knit the bone together.", realUse: "Associated with topical folk use for bruises and sprains.", humanWarning: "Potentially toxic to the human liver if ingested; avoid internal use." },
+            { name: "Bindweed", realName: "Convolvulus", category: "Broken Bones", symptoms: ["broken", "bone", "binding"], appearance: "Trumpet flowers, vines.", location: "Forest edges.", bookUse: "Use strong vines to fasten splints against a broken leg.", realUse: "Natural fiber binding." },
+            { name: "Stinging Nettle", realName: "Urtica dioica", category: "Broken Bones", symptoms: ["broken", "swelling"], appearance: "Spiky leaves.", location: "Waste ground.", bookUse: "Apply to the site of a break to bring down the swelling.", realUse: "Traditionally associated with anti-inflammatory uses.", catWarning: "Will sting the skin; handle with care." },
+
+            { name: "Marigold", realName: "Calendula", category: "Infection", symptoms: ["infection", "wound"], appearance: "Orange flower.", location: "Riverbanks.", bookUse: "Best defense against rot. Apply pulp to wounds.", realUse: "Promotes skin healing.", secondary: "Also used to stop bleeding." },
+            { name: "Horsetail", realName: "Equisetum", category: "Infection", symptoms: ["infection", "wound"], appearance: "Segmented stalks.", location: "Marshy ground.", bookUse: "Use sap to fight rot in deep wounds.", realUse: "Contains silica; historically used in topical preparations.", secondary: "Also legendary for stopping blood." },
+            { name: "Chervil", realName: "Anthriscus", category: "Infection", symptoms: ["infection", "wound"], appearance: "Fern-like leaves.", location: "Under Snakerocks.", bookUse: "Chew root into pulp for deep infections.", realUse: "Culinary herb.", secondary: "Also used to settle rolling bellies." },
+
+            { name: "Poppy Seeds", realName: "Papaver somniferum", category: "Pain & Shock", symptoms: ["pain", "sleep", "warning"], appearance: "Tiny black seeds.", location: "Open fields.", bookUse: "Greatest mercy. Bring sleep and ease pain.", realUse: "Source plant for opiate compounds.", catWarning: "Never for queens in labor or newborn kits.", humanWarning: "Highly dangerous and addictive; do not ingest based on this guide." },
+            { name: "Catmint", realName: "Nepeta cataria", category: "Coughs", symptoms: ["cough", "greencough"], appearance: "Leafy, spicy.", location: "Twoleg nests.", bookUse: "Essential against Greencough. Essential for breath.", realUse: "Often used in teas and traditional remedies.", danger: "Never run out." },
+            { name: "Honey", realName: "Bee nectar", category: "Breathing", symptoms: ["throat", "smoke"], appearance: "Golden liquid.", location: "High trees.", bookUse: "Soothe the throat after breathing smoke.", realUse: "Commonly used to soothe sore throats." },
+            { name: "Borage", realName: "Borago officinalis", category: "Kitting & Nursing", symptoms: ["milk", "nursing", "fever"], appearance: "Blue flowers.", location: "Waste ground.", bookUse: "Ensures milk supply and cools fever.", realUse: "Known for seed oil and traditional herbal use.", humanWarning: "Avoid casual wild ingestion due to possible liver-toxic compounds." },
+            { name: "Lavender", realName: "Lavandula", category: "Utility", symptoms: ["anxiety", "dead"], appearance: "Purple flowers.", location: "Sunny soil.", bookUse: "Calms heart. Hides death-scent for burial.", realUse: "Commonly associated with calming scent and aromatherapy." },
+            { name: "Moss", realName: "Bryophyta", category: "Utility", symptoms: ["fever", "water", "weak"], appearance: "Green carpets.", location: "Shaded rocks.", bookUse: "Used to bring water to those too weak to drink.", realUse: "Traditional natural absorbent and insulating material.", danger: "Wet moss must be dried to prevent rot." }
+        ];
+
+        const illnessLibrary = [
+            { name: "Kickcough", realName: "Pertussis", category: "Infections", symptoms: ["cough", "chest"], appearance: "Sudden sharp cough.", bookUse: "Treat with Honey and Coltsfoot.", realUse: "Human whooping cough." },
+            { name: "Whitecough", realName: "Chest Cold", category: "Infections", symptoms: ["whitecough", "cough"], appearance: "Clear mucus.", bookUse: "Catch it early. Use Catmint.", realUse: "Viral respiratory infection." },
+            { name: "Greencough", realName: "Pneumonia", category: "Infections", symptoms: ["greencough", "fever"], appearance: "Green mucus, fever.", bookUse: "Isolate patient. Catmint is essential.", realUse: "A serious lung infection; not always bacterial." },
+            { name: "Blackcough", realName: "Pulmonary Hemorrhage", category: "Infections", symptoms: ["blackcough", "blood"], appearance: "Coughing dark blood.", bookUse: "Almost no cure. Give Poppy Seeds for pain.", realUse: "Could parallel advanced TB, lung hemorrhage, or severe respiratory trauma." },
+            { name: "Cloud Mouth", realName: "Oral Thrush", category: "Mouth", symptoms: ["cloud mouth", "white"], appearance: "White patches.", bookUse: "Use Honey and Chervil.", realUse: "Oral candidiasis." }
+        ];
+
+        const poisonLibrary = [
+            { name: "Deathberries", realName: "Yew Berries", appearance: "Red berries.", location: "Shadowy thickets.", bookUse: "One stops a heart. Predators or mercy only.", realUse: "Contains toxic taxine alkaloids.", humanWarning: "Lethal; causes sudden human poisoning." },
+            { name: "Deadly Nightshade", realName: "Belladonna", appearance: "Purple berries.", location: "Moist ground.", bookUse: "Brings lethal sleep.", realUse: "Contains atropine and related toxins.", humanWarning: "Lethal human toxin." },
+            { name: "Foxglove", realName: "Digitalis", appearance: "Tall bells.", location: "Sunny slopes.", bookUse: "Seizes heart instantly.", realUse: "Contains potent cardiac glycosides.", humanWarning: "Wild ingestion can cause fatal heart failure." },
+            { name: "Water Hemlock", realName: "Cicuta", appearance: "White flowers.", location: "Stream banks.", bookUse: "Foaming and rapid death.", realUse: "Violently poisonous neurotoxin.", humanWarning: "Extremely toxic plant." }
+        ];
+
+        const taskLibrary = [
+            { name: "Herb Knowledge", realName: "Pharmacology", bookUse: "Maintain full supply in den.", realUse: "Track, classify, and document remedies carefully.", symptoms: ["tasks"] },
+            { name: "Assisting Queens", realName: "Obstetrics", bookUse: "Support pregnancy and birth.", realUse: "Monitor pregnancy, delivery, and aftercare.", symptoms: ["tasks", "pregnant"] },
+            { name: "Public Health", realName: "Wellness Checks", bookUse: "Actively check Clan health.", realUse: "Watch for outbreaks and maintain hygiene practices.", symptoms: ["tasks"] },
+            { name: "Burial Prep", realName: "Mortuary Science", bookUse: "Preparing deceased for final sleep.", realUse: "Careful handling of the deceased with respect and sanitation.", symptoms: ["tasks", "death"] }
+        ];
+
+        const mixLibrary = [
+            { name: "Greencough Fighter", category: "Recovery", ingredients: ["Catmint", "Honey", "Tansy"], use: "Battle heavy coughs.", description: "A lore-inspired mixture for chest illness scenes." },
+            { name: "The Kitting Mix", category: "Nursery", ingredients: ["Borage", "Raspberry"], use: "Ease labor pain.", description: "A nursery blend often mentioned in roleplay and fan reference contexts." },
+            { name: "Broken Bone Poultice", category: "Recovery", ingredients: ["Comfrey Root", "Bindweed", "Stinging Nettle"], use: "Knit bones tight.", description: "A classic story remedy for broken limbs." }
+        ];
+
+        const techLibrary = [
+            { title: "Belly Diagnosis", action: "Patting", description: "Rushing water = pregnancy. Dull = worms. Bubbly = bloat.", symptoms: ["pregnant", "belly"] },
+            { title: "Harvesting Advice", action: "Sun-Drying", description: "Dry wet herbs; wet herbs rot.", symptoms: ["gathering", "harvest"] },
+            { title: "Broken Bone Test", action: "Nipping", description: "Gently nip spine. No response means break.", symptoms: ["broken", "spine"] }
+        ];
+
+        const codeEntries = [
+            "A medicine cat cannot have a mate.",
+            "A medicine cat cannot have kits.",
+            "Personal feelings never obstruct duties.",
+            "Safe border travel.",
+            "Warrior training permitted first.",
+            "Basic defense moves required.",
+            "Interpret StarClan signs.",
+            "Cannot reject injured cats.",
+            "Save all possible cats.",
+            "Give your life to save another."
+        ];
+
+        let currentMode = 'book';
+
+        function createGradients() {
+            const container = document.getElementById('weatherLayer');
+            container.innerHTML = '';
+            for (let i = 0; i < 25; i++) {
+                const dot = document.createElement('div');
+                dot.className = 'weather-spot';
+                dot.style.top = Math.random() * 100 + '%';
+                dot.style.left = Math.random() * 100 + '%';
+                dot.style.width = (Math.random() * 350 + 100) + 'px';
+                dot.style.height = (Math.random() * 350 + 100) + 'px';
+                dot.style.background = i % 2 === 0 ? 'var(--stain-base)' : 'var(--age-spot)';
+                dot.style.opacity = Math.random() * 0.7;
+                container.appendChild(dot);
+            }
+        }
+
+        function extractKeywords(input) {
+            const stops = ['i', 'have', 'a', 'cat', 'with', 'that', 'has', 'is', 'it', 'the', 'my', 'am', 'help', 'at', 'correctly', "isn't", 'how', 'do', 'know', 'if', 'she'];
+            return input.toLowerCase().split(/[\s,.'!?]+/).filter(w => !stops.includes(w) && w.length > 2);
+        }
+
+        function buildSearchString(item) {
+            return [
+                item.name || '',
+                item.title || '',
+                item.realName || '',
+                item.category || '',
+                item.use || '',
+                item.bookUse || '',
+                item.realUse || '',
+                item.description || '',
+                item.ingredients ? item.ingredients.join(' ') : '',
+                item.symptoms ? item.symptoms.join(' ') : ''
+            ].join(' ').toLowerCase();
+        }
+
+        function render() {
+            const raw = document.getElementById('mainSearch').value.trim();
+            const keys = extractKeywords(raw);
+            const filter = item => keys.length === 0 || keys.some(k => buildSearchString(item).includes(k));
+
+            const sections = [
+                { id: 'herbResults', data: herbLibrary, grouped: true },
+                { id: 'mixList', data: mixLibrary },
+                { id: 'illnessList', data: illnessLibrary },
+                { id: 'poisonList', data: poisonLibrary },
+                { id: 'techniquesList', data: techLibrary },
+                { id: 'taskList', data: taskLibrary }
+            ];
+
+            let totalMatches = 0;
+
+            sections.forEach(sec => {
+                const filtered = sec.data.filter(filter);
+                totalMatches += filtered.length;
+                const el = document.getElementById(sec.id);
+                el.parentElement.style.display = (keys.length > 0 && filtered.length === 0) ? 'none' : 'block';
+
+                if (sec.grouped) {
+                    const groups = {};
+                    filtered.forEach(h => {
+                        if (!groups[h.category]) groups[h.category] = [];
+                        groups[h.category].push(h);
+                    });
+                    let html = '';
+                    Object.keys(groups).sort().forEach(cat => {
+                        html += `<div class="category-header">${cat}</div>`;
+                        groups[cat].forEach(item => html += buildCard(item));
+                    });
+                    el.innerHTML = html;
+                } else {
+                    el.innerHTML = filtered.map(item => buildCard(item)).join('');
+                }
+            });
+
+            const codeMatches = keys.length === 0
+                ? codeEntries
+                : codeEntries.filter(entry => keys.some(k => entry.toLowerCase().includes(k)));
+
+            totalMatches += codeMatches.length;
+            document.getElementById('codeSection').style.display = (keys.length > 0 && codeMatches.length === 0) ? 'none' : 'block';
+            document.getElementById('codeList').innerHTML = codeMatches.map(r => `<li>${r}</li>`).join('');
+            document.getElementById('noResultsMessage').style.display = (keys.length > 0 && totalMatches === 0) ? 'block' : 'none';
+        }
+
+        function buildCard(item) {
+            const warning = currentMode === 'book' ? item.catWarning || item.danger : item.humanWarning || item.danger;
+            const mainText = currentMode === 'book'
+                ? (item.bookUse || item.use || item.description)
+                : (item.realUse || item.description || item.use || item.bookUse);
+
+            return `
+                <article class="mb-14 relative">
+                    <h3 class="herb-title">${item.name || item.title}</h3>
+                    ${currentMode === 'real' && item.realName ? `<div class="real-name-sub">[${item.realName}]</div>` : ''}
+                    ${item.category ? `<div class="herb-detail-meta">Category: ${item.category}</div>` : ''}
+                    ${item.appearance ? `<div class="herb-detail-meta">Recognized by: ${item.appearance}</div>` : ''}
+                    ${item.location ? `<div class="herb-detail-meta">Found at: ${item.location}</div>` : ''}
+                    ${item.action ? `<div class="herb-detail-meta">Action: ${item.action}</div>` : ''}
+                    ${item.ingredients ? `<div class="flex flex-wrap gap-2 mb-3">${item.ingredients.map(ing => `<span class="mix-ingredient">${ing}</span>`).join('')}</div>` : ''}
+                    ${mainText ? `<div class="advisory-text">${mainText}</div>` : ''}
+                    ${warning ? `<div class="healer-warning">Warning: ${warning}</div>` : ''}
+                    ${item.secondary && currentMode === 'book' ? `<div class="cross-wisdom">${item.secondary}</div>` : ''}
+                </article>`;
+        }
+
+        function setMode(mode) {
+            currentMode = mode;
+            document.getElementById('bookModeBtn').classList.toggle('toggle-active', mode === 'book');
+            document.getElementById('realModeBtn').classList.toggle('toggle-active', mode === 'real');
+            document.getElementById('bookModeBtn').setAttribute('aria-pressed', mode === 'book');
+            document.getElementById('realModeBtn').setAttribute('aria-pressed', mode === 'real');
+
+            const map = {
+                book: { ill: "The Sickness Stash 🐱🤧", tech: "Mentor's Techniques 🐾", task: "Healer's Sacred Tasks 🕯️", pois: "The Shadow Stash 💀", tasksNav: "🕯️", illNav: "🐱🤧", techsNav: "🐾" },
+                real: { ill: "Human Illnesses 🤒", tech: "Twoleg Techniques 👣", task: "Twoleg Responsibilities 📋", pois: "Toxic Plants 💀", tasksNav: "📋", illNav: "🤒", techsNav: "👣" }
+            };
+
+            document.getElementById('nav-illness').innerHTML = map[mode].illNav;
+            document.getElementById('nav-techs').innerHTML = map[mode].techsNav;
+            document.getElementById('nav-tasks').innerHTML = map[mode].tasksNav;
+            document.getElementById('illnessHeader').innerHTML = map[mode].ill;
+            document.getElementById('techHeader').innerHTML = map[mode].tech;
+            document.getElementById('taskHeader').innerHTML = map[mode].task;
+            document.getElementById('poisonHeader').innerHTML = map[mode].pois;
+            render();
+        }
+
+        function quickSearch(term) {
+            document.getElementById('mainSearch').value = term;
+            render();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        document.getElementById('mainSearch').addEventListener('input', render);
+        window.addEventListener('load', () => {
+            createGradients();
+            render();
+        });
+    </script>
+</body>
+
+</html>
