@@ -324,7 +324,14 @@
             gap: 15px;
         }
 
-        .jump-btn {
+        .jump-nav-links {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .jump-btn,
+        .jump-toggle-btn {
             background: #1a1512;
             color: #f4e4bc;
             width: 58px;
@@ -339,8 +346,17 @@
             text-decoration: none;
         }
 
+        .jump-toggle-btn {
+            display: none;
+            cursor: pointer;
+            font-size: 1.2rem;
+            font-weight: 700;
+        }
+
         .jump-btn:hover,
-        .jump-btn:focus-visible {
+        .jump-btn:focus-visible,
+        .jump-toggle-btn:hover,
+        .jump-toggle-btn:focus-visible {
             background: var(--ink-green);
             transform: scale(1.12) translateX(4px);
         }
@@ -410,17 +426,30 @@
 
             .jump-nav {
                 position: fixed;
-                left: 50%;
+                right: 12px;
+                left: auto;
                 top: auto;
                 bottom: 12px;
-                transform: translateX(-50%);
-                flex-direction: row;
-                flex-wrap: wrap;
-                justify-content: center;
-                max-width: calc(100vw - 24px);
-                background: rgba(26, 18, 14, 0.92);
-                padding: 8px;
-                border-radius: 999px;
+                transform: none;
+                align-items: flex-end;
+                gap: 10px;
+            }
+
+            .jump-toggle-btn {
+                display: flex;
+            }
+
+            .jump-nav-links {
+                display: none;
+                gap: 10px;
+                padding: 10px;
+                border-radius: 22px;
+                background: rgba(26, 18, 14, 0.94);
+                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
+            }
+
+            .jump-nav.open .jump-nav-links {
+                display: flex;
             }
 
             .mode-toggle {
@@ -429,6 +458,12 @@
                 left: 10px;
                 display: flex;
                 justify-content: center;
+            }
+
+            .jump-btn,
+            .jump-toggle-btn {
+                width: 50px;
+                height: 50px;
             }
 
             .main-section-header {
@@ -473,16 +508,20 @@
         <button id="realModeBtn" type="button" onclick="setMode('real')" aria-pressed="false">Twoleg Truth</button>
     </div>
 
-    <nav class="jump-nav" aria-label="Quick section navigation">
-        <a href="#herbSection" class="jump-btn" title="Herbs" aria-label="Go to herbs">🌿</a>
-        <a href="#mixSection" class="jump-btn" title="Mixes" aria-label="Go to mixes">🥣</a>
-        <a href="#illnessSection" class="jump-btn" title="Illness" id="nav-illness"
-            aria-label="Go to illnesses">🤧</a>
-        <a href="#poisonSection" class="jump-btn" title="Shadow" id="nav-poison" aria-label="Go to toxic plants">💀</a>
-        <a href="#techniquesSection" class="jump-btn" title="Techniques" id="nav-techs"
-            aria-label="Go to techniques">🐾</a>
-        <a href="#taskSection" class="jump-btn" title="Tasks" id="nav-tasks" aria-label="Go to tasks">🕯️</a>
-        <a href="#codeSection" class="jump-btn" title="Code" aria-label="Go to code">📜</a>
+    <nav class="jump-nav" aria-label="Quick section navigation" id="jumpNav">
+        <button type="button" class="jump-toggle-btn" id="jumpNavToggle" aria-expanded="false"
+            aria-controls="jumpNavLinks" aria-label="Open section menu">☰</button>
+        <div class="jump-nav-links" id="jumpNavLinks">
+            <a href="#herbSection" class="jump-btn" title="Herbs" aria-label="Go to herbs">🌿</a>
+            <a href="#mixSection" class="jump-btn" title="Mixes" aria-label="Go to mixes">🥣</a>
+            <a href="#illnessSection" class="jump-btn" title="Illness" id="nav-illness"
+                aria-label="Go to illnesses">🤧</a>
+            <a href="#poisonSection" class="jump-btn" title="Shadow" id="nav-poison" aria-label="Go to toxic plants">💀</a>
+            <a href="#techniquesSection" class="jump-btn" title="Techniques" id="nav-techs"
+                aria-label="Go to techniques">🐾</a>
+            <a href="#taskSection" class="jump-btn" title="Tasks" id="nav-tasks" aria-label="Go to tasks">🕯️</a>
+            <a href="#codeSection" class="jump-btn" title="Code" aria-label="Go to code">📜</a>
+        </div>
     </nav>
 
     <div class="scroll-container">
@@ -803,6 +842,22 @@
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
+        function closeJumpNav() {
+            const nav = document.getElementById('jumpNav');
+            const toggle = document.getElementById('jumpNavToggle');
+            nav.classList.remove('open');
+            toggle.setAttribute('aria-expanded', 'false');
+            toggle.innerHTML = '☰';
+        }
+
+        function toggleJumpNav() {
+            const nav = document.getElementById('jumpNav');
+            const toggle = document.getElementById('jumpNavToggle');
+            const isOpen = nav.classList.toggle('open');
+            toggle.setAttribute('aria-expanded', String(isOpen));
+            toggle.innerHTML = isOpen ? '✕' : '☰';
+        }
+
         function jumpToHerb(event, herbName) {
             event.preventDefault();
             document.getElementById('mainSearch').value = '';
@@ -833,6 +888,13 @@
         }
 
         document.getElementById('mainSearch').addEventListener('input', render);
+        document.getElementById('jumpNavToggle').addEventListener('click', toggleJumpNav);
+        document.querySelectorAll('#jumpNavLinks a').forEach(link => {
+            link.addEventListener('click', closeJumpNav);
+        });
+        window.addEventListener('resize', () => {
+            if (window.innerWidth > 900) closeJumpNav();
+        });
         window.addEventListener('load', () => {
             createGradients();
             render();
