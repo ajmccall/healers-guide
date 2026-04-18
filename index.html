@@ -203,17 +203,32 @@
             background: rgba(45, 90, 39, 0.05);
         }
 
-        .category-header {
+        .main-section-header {
             font-family: 'MedievalSharp', cursive;
-            font-size: 2.3rem;
+            font-size: 2.5rem;
             color: var(--header-brown);
-            margin: 100px 0 50px;
-            padding-bottom: 15px;
+            margin: 100px 0 42px;
+            padding-bottom: 18px;
             border-bottom: 3px double var(--ink-green);
             text-transform: uppercase;
             position: relative;
             z-index: 5;
             letter-spacing: 5px;
+        }
+
+        .subsection-header {
+            font-family: 'Fondamento', cursive;
+            font-size: 1.9rem;
+            color: var(--ink-green);
+            margin: 55px 0 28px;
+            padding: 12px 18px;
+            border-left: 5px solid var(--ink-green);
+            background: rgba(45, 90, 39, 0.06);
+            border-radius: 0 12px 12px 0;
+            position: relative;
+            z-index: 5;
+            letter-spacing: 1px;
+            text-transform: none;
         }
 
         .cross-wisdom {
@@ -253,9 +268,8 @@
         }
 
         .search-area {
-            border-bottom: 3px solid rgba(30, 48, 36, 0.15);
-            padding: 20px 0 50px;
-            margin-bottom: 80px;
+            padding: 20px 0 30px;
+            margin-bottom: 70px;
             margin-top: 60px;
             position: relative;
             z-index: 10;
@@ -287,6 +301,16 @@
             font-size: 12px;
             font-weight: bold;
             letter-spacing: 1px;
+            text-decoration: none;
+            display: inline-block;
+            transition: 0.2s;
+        }
+
+        a.mix-ingredient:hover,
+        a.mix-ingredient:focus-visible {
+            background: rgba(45, 90, 39, 0.16);
+            border-color: rgba(45, 90, 39, 0.4);
+            transform: translateY(-1px);
         }
 
         .jump-nav {
@@ -407,9 +431,16 @@
                 justify-content: center;
             }
 
-            .category-header {
+            .main-section-header {
                 font-size: 1.8rem;
                 letter-spacing: 2px;
+            }
+
+            .subsection-header {
+                font-size: 1.45rem;
+                margin: 38px 0 22px;
+                padding: 10px 14px;
+                letter-spacing: 0.5px;
             }
 
             .herb-title {
@@ -446,7 +477,7 @@
         <a href="#herbSection" class="jump-btn" title="Herbs" aria-label="Go to herbs">🌿</a>
         <a href="#mixSection" class="jump-btn" title="Mixes" aria-label="Go to mixes">🥣</a>
         <a href="#illnessSection" class="jump-btn" title="Illness" id="nav-illness"
-            aria-label="Go to illnesses">🐱🤧</a>
+            aria-label="Go to illnesses">🤧</a>
         <a href="#poisonSection" class="jump-btn" title="Shadow" id="nav-poison" aria-label="Go to toxic plants">💀</a>
         <a href="#techniquesSection" class="jump-btn" title="Techniques" id="nav-techs"
             aria-label="Go to techniques">🐾</a>
@@ -475,31 +506,31 @@
 
             <div id="contentArea">
                 <section id="herbSection" class="scroll-mt-24" aria-labelledby="herbSectionHeading">
-                    <h2 id="herbSectionHeading" class="category-header">Herbs & Remedies 🌿</h2>
+                    <h2 id="herbSectionHeading" class="main-section-header">Herbs & Remedies 🌿</h2>
                     <div id="herbResults"></div>
                 </section>
                 <section id="mixSection" class="mt-24 scroll-mt-24" aria-labelledby="mixSectionHeading">
-                    <h2 id="mixSectionHeading" class="category-header">Prepared Mixes 🥣</h2>
+                    <h2 id="mixSectionHeading" class="main-section-header">Prepared Mixes 🥣</h2>
                     <div id="mixList"></div>
                 </section>
                 <section id="illnessSection" class="mt-24 scroll-mt-24" aria-labelledby="illnessHeader">
-                    <h2 id="illnessHeader" class="category-header">The Sickness Stash 🐱🤧</h2>
+                    <h2 id="illnessHeader" class="main-section-header">Illnesses and Diseases 🤧</h2>
                     <div id="illnessList"></div>
                 </section>
                 <section id="poisonSection" class="mt-24 scroll-mt-24" aria-labelledby="poisonHeader">
-                    <h2 id="poisonHeader" class="category-header">The Shadow Stash 💀</h2>
+                    <h2 id="poisonHeader" class="main-section-header">The Shadow Stash 💀</h2>
                     <div id="poisonList"></div>
                 </section>
                 <section id="techniquesSection" class="mt-24 scroll-mt-24" aria-labelledby="techHeader">
-                    <h2 id="techHeader" class="category-header">Mentor's Techniques 🐾</h2>
+                    <h2 id="techHeader" class="main-section-header">Mentor's Techniques 🐾</h2>
                     <div id="techniquesList"></div>
                 </section>
                 <section id="taskSection" class="mt-24 scroll-mt-24" aria-labelledby="taskHeader">
-                    <h2 id="taskHeader" class="category-header">Healer's Sacred Tasks 🕯️</h2>
+                    <h2 id="taskHeader" class="main-section-header">Healer's Sacred Tasks 🕯️</h2>
                     <div id="taskList"></div>
                 </section>
                 <section id="codeSection" class="mt-36 scroll-mt-24 pb-12" aria-labelledby="codeHeading">
-                    <h2 id="codeHeading" class="category-header text-center">The Medicine Cat Code</h2>
+                    <h2 id="codeHeading" class="main-section-header text-center">The Medicine Cat Code</h2>
                     <ul id="codeList" class="list-decimal pl-16 space-y-9 font-serif italic leading-relaxed"></ul>
                 </section>
             </div>
@@ -545,8 +576,10 @@
             { name: "Chervil", realName: "Anthriscus", category: "Bellyache", symptoms: ["bellyache", "stomach"], appearance: "Fern-like leaves.", location: "Under Snakerocks.", bookUse: "Feed leaves to settle a rolling belly.", realUse: "Culinary herb.", humanWarning: "Wild chervil can be confused with deadly lookalikes such as hemlock." },
             { name: "Mallow", realName: "Malva", category: "Bellyache", symptoms: ["bellyache", "throat"], appearance: "Pinkish flowers.", location: "Damp areas.", bookUse: "Soothe an aching belly or sore throat.", realUse: "Contains soothing mucilage.", humanWarning: "Correct identification is essential; toxic lookalikes exist." },
             { name: "Sweet-sedge", realName: "Acorus calamus", category: "Bellyache", symptoms: ["infection", "bellyache"], appearance: "Long stalks.", location: "Marshy ground.", bookUse: "Swallow juice to fight chest infections.", realUse: "Historically used as a scenting and traditional remedy plant.", humanWarning: "Some varieties may contain harmful compounds if consumed." },
+            { name: "Raspberry", realName: "Rubus idaeus", category: "Bellyache", symptoms: ["raspberry", "stomach", "nursing"], appearance: "Soft red berries and thorny canes.", location: "Sunny bramble patches.", bookUse: "A useful addition to soothing mixtures, especially for queens and nursery care.", realUse: "Traditionally used in teas and herbal preparations.", humanWarning: "Wild brambles should still be identified carefully before use." },
 
             { name: "Comfrey Root", realName: "Symphytum", category: "Broken Bones", symptoms: ["broken", "bone", "leg"], appearance: "Large leaves, dark root.", location: "Damp ground.", bookUse: "Chew well and wrap around the break to knit the bone together.", realUse: "Associated with topical folk use for bruises and sprains.", humanWarning: "Potentially toxic to the human liver if ingested; avoid internal use." },
+            { name: "Oak Leaves", realName: "Quercus", category: "Broken Bones", symptoms: ["oak", "leaves", "broken", "stiffness"], appearance: "Broad lobed leaves.", location: "Beneath oak trees.", bookUse: "Used in strengthening wraps and healing mixtures for strained or injured limbs.", realUse: "Oak leaves and bark were used in some traditional remedies for their tannins.", humanWarning: "Do not forage or ingest based on this guide alone." },
             { name: "Bindweed", realName: "Convolvulus", category: "Broken Bones", symptoms: ["broken", "bone", "binding"], appearance: "Trumpet flowers, vines.", location: "Forest edges.", bookUse: "Use strong vines to fasten splints against a broken leg.", realUse: "Natural fiber binding." },
             { name: "Stinging Nettle", realName: "Urtica dioica", category: "Broken Bones", symptoms: ["broken", "swelling"], appearance: "Spiky leaves.", location: "Waste ground.", bookUse: "Apply to the site of a break to bring down the swelling.", realUse: "Traditionally associated with anti-inflammatory uses.", catWarning: "Will sting the skin; handle with care." },
 
@@ -556,6 +589,7 @@
 
             { name: "Poppy Seeds", realName: "Papaver somniferum", category: "Pain & Shock", symptoms: ["pain", "sleep", "warning"], appearance: "Tiny black seeds.", location: "Open fields.", bookUse: "Greatest mercy. Bring sleep and ease pain.", realUse: "Source plant for opiate compounds.", catWarning: "Never for queens in labor or newborn kits.", humanWarning: "Highly dangerous and addictive; do not ingest based on this guide." },
             { name: "Catmint", realName: "Nepeta cataria", category: "Coughs", symptoms: ["cough", "greencough"], appearance: "Leafy, spicy.", location: "Twoleg nests.", bookUse: "Essential against Greencough. Essential for breath.", realUse: "Often used in teas and traditional remedies.", danger: "Never run out." },
+            { name: "Tansy", realName: "Tanacetum vulgare", category: "Coughs", symptoms: ["cough", "cold", "tansy"], appearance: "Button-like yellow flowers.", location: "Sunny clearings.", bookUse: "Mixed into remedies to help with coughs and chill.", realUse: "Historically used in folk remedies, but not safe for casual ingestion.", humanWarning: "Can be toxic; do not use medicinally from this guide." },
             { name: "Honey", realName: "Bee nectar", category: "Breathing", symptoms: ["throat", "smoke"], appearance: "Golden liquid.", location: "High trees.", bookUse: "Soothe the throat after breathing smoke.", realUse: "Commonly used to soothe sore throats." },
             { name: "Borage", realName: "Borago officinalis", category: "Kitting & Nursing", symptoms: ["milk", "nursing", "fever"], appearance: "Blue flowers.", location: "Waste ground.", bookUse: "Ensures milk supply and cools fever.", realUse: "Known for seed oil and traditional herbal use.", humanWarning: "Avoid casual wild ingestion due to possible liver-toxic compounds." },
             { name: "Lavender", realName: "Lavandula", category: "Utility", symptoms: ["anxiety", "dead"], appearance: "Purple flowers.", location: "Sunny soil.", bookUse: "Calms heart. Hides death-scent for burial.", realUse: "Commonly associated with calming scent and aromatherapy." },
@@ -586,8 +620,12 @@
 
         const mixLibrary = [
             { name: "Greencough Fighter", category: "Recovery", ingredients: ["Catmint", "Honey", "Tansy"], use: "Battle heavy coughs.", description: "A lore-inspired mixture for chest illness scenes." },
+            { name: "Honey & Tansy Cough Mixture", category: "Recovery", ingredients: ["Honey", "Tansy"], use: "Combat coughs and soothe the throat.", description: "A simple mixture for cough care and easier breathing." },
             { name: "The Kitting Mix", category: "Nursery", ingredients: ["Borage", "Raspberry"], use: "Ease labor pain.", description: "A nursery blend often mentioned in roleplay and fan reference contexts." },
-            { name: "Broken Bone Poultice", category: "Recovery", ingredients: ["Comfrey Root", "Bindweed", "Stinging Nettle"], use: "Knit bones tight.", description: "A classic story remedy for broken limbs." }
+            { name: "Broken Bone Poultice", category: "Recovery", ingredients: ["Comfrey Root", "Bindweed", "Stinging Nettle"], use: "Knit bones tight.", description: "A classic story remedy for broken limbs." },
+            { name: "Comfrey & Oak Shoot Bone Wrap", category: "Recovery", ingredients: ["Comfrey Root", "Oak Leaves"], use: "Support healing for broken legs.", description: "Comfrey and oak are bound together to steady and strengthen an injured leg." },
+            { name: "Marigold & Comfrey Poultice", category: "Recovery", ingredients: ["Marigold", "Comfrey Root"], use: "Ease joint stiffness and soreness.", description: "A soft poultice used for aching joints and stiffness." },
+            { name: "Reinforced Bone Cast", category: "Recovery", ingredients: ["Comfrey Root", "Cobwebs", "Bindweed"], use: "Create a firmer cast for a broken bone.", description: "A broken limb is dressed with herbs, then secured with cobwebs and a supporting splint-like binding." }
         ];
 
         const techLibrary = [
@@ -610,6 +648,22 @@
         ];
 
         let currentMode = 'book';
+
+        function slugify(text) {
+            return text.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+        }
+
+        function herbAnchorId(name) {
+            return `herb-${slugify(name)}`;
+        }
+
+        function hasHerbEntry(name) {
+            return herbLibrary.some(herb => herb.name.toLowerCase() === name.toLowerCase());
+        }
+
+        function isPrimaryHerbEntry(item) {
+            return herbLibrary.find(herb => herb.name.toLowerCase() === item.name.toLowerCase()) === item;
+        }
 
         function createGradients() {
             const container = document.getElementById('weatherLayer');
@@ -677,8 +731,8 @@
                     });
                     let html = '';
                     Object.keys(groups).sort().forEach(cat => {
-                        html += `<div class="category-header">${cat}</div>`;
-                        groups[cat].forEach(item => html += buildCard(item));
+                        html += `<div class="subsection-header">${cat}</div>`;
+                        groups[cat].forEach(item => html += buildCard(item, true));
                     });
                     el.innerHTML = html;
                 } else {
@@ -696,21 +750,25 @@
             document.getElementById('noResultsMessage').style.display = (keys.length > 0 && totalMatches === 0) ? 'block' : 'none';
         }
 
-        function buildCard(item) {
+        function buildCard(item, canAnchorHerb = false) {
             const warning = currentMode === 'book' ? item.catWarning || item.danger : item.humanWarning || item.danger;
             const mainText = currentMode === 'book'
                 ? (item.bookUse || item.use || item.description)
                 : (item.realUse || item.description || item.use || item.bookUse);
+            const title = item.name || item.title;
+            const herbId = canAnchorHerb && item.name && isPrimaryHerbEntry(item) ? ` id="${herbAnchorId(item.name)}"` : '';
 
             return `
-                <article class="mb-14 relative">
-                    <h3 class="herb-title">${item.name || item.title}</h3>
+                <article class="mb-14 relative"${herbId}>
+                    <h3 class="herb-title">${title}</h3>
                     ${currentMode === 'real' && item.realName ? `<div class="real-name-sub">[${item.realName}]</div>` : ''}
                     ${item.category ? `<div class="herb-detail-meta">Category: ${item.category}</div>` : ''}
                     ${item.appearance ? `<div class="herb-detail-meta">Recognized by: ${item.appearance}</div>` : ''}
                     ${item.location ? `<div class="herb-detail-meta">Found at: ${item.location}</div>` : ''}
                     ${item.action ? `<div class="herb-detail-meta">Action: ${item.action}</div>` : ''}
-                    ${item.ingredients ? `<div class="flex flex-wrap gap-2 mb-3">${item.ingredients.map(ing => `<span class="mix-ingredient">${ing}</span>`).join('')}</div>` : ''}
+                    ${item.ingredients ? `<div class="flex flex-wrap gap-2 mb-3">${item.ingredients.map(ing => hasHerbEntry(ing)
+                        ? `<a href="#${herbAnchorId(ing)}" class="mix-ingredient" onclick="jumpToHerb(event, '${ing.replace(/'/g, "&#39;")}')">${ing}</a>`
+                        : `<span class="mix-ingredient">${ing}</span>`).join('')}</div>` : ''}
                     ${mainText ? `<div class="advisory-text">${mainText}</div>` : ''}
                     ${warning ? `<div class="healer-warning">Warning: ${warning}</div>` : ''}
                     ${item.secondary && currentMode === 'book' ? `<div class="cross-wisdom">${item.secondary}</div>` : ''}
@@ -725,7 +783,7 @@
             document.getElementById('realModeBtn').setAttribute('aria-pressed', mode === 'real');
 
             const map = {
-                book: { ill: "The Sickness Stash 🐱🤧", tech: "Mentor's Techniques 🐾", task: "Healer's Sacred Tasks 🕯️", pois: "The Shadow Stash 💀", tasksNav: "🕯️", illNav: "🐱🤧", techsNav: "🐾" },
+                book: { ill: "Illnesses and Diseases 🤧", tech: "Mentor's Techniques 🐾", task: "Healer's Sacred Tasks 🕯️", pois: "The Shadow Stash 💀", tasksNav: "🕯️", illNav: "🤧", techsNav: "🐾" },
                 real: { ill: "Human Illnesses 🤒", tech: "Twoleg Techniques 👣", task: "Twoleg Responsibilities 📋", pois: "Toxic Plants 💀", tasksNav: "📋", illNav: "🤒", techsNav: "👣" }
             };
 
@@ -743,6 +801,35 @@
             document.getElementById('mainSearch').value = term;
             render();
             window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function jumpToHerb(event, herbName) {
+            event.preventDefault();
+            document.getElementById('mainSearch').value = '';
+            render();
+
+            const scrollToTarget = () => {
+                let target = document.getElementById(herbAnchorId(herbName));
+
+                if (!target) {
+                    const herbMatch = herbLibrary.find(herb =>
+                        herb.name.toLowerCase() === herbName.toLowerCase() ||
+                        (herb.realName && herb.realName.toLowerCase() === herbName.toLowerCase())
+                    );
+                    if (herbMatch) {
+                        target = document.getElementById(herbAnchorId(herbMatch.name));
+                    }
+                }
+
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    history.replaceState(null, '', `#${target.id}`);
+                } else {
+                    document.getElementById('herbSection').scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            };
+
+            requestAnimationFrame(scrollToTarget);
         }
 
         document.getElementById('mainSearch').addEventListener('input', render);
